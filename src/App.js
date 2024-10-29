@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './login';  // Ensure this is correctly imported
+import Login from './login';  
 import { GoogleLogin } from '@react-oauth/google';
 
 function App() {
@@ -18,4 +18,4 @@ function App() {
   
 }
 
-export default App;  // Make sure to include this line to export the App component
+export default App;  

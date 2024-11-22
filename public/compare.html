@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Dine Deal | Explore your food options</title>
 
-
-    <!-- ===============================================-->
-    <!--    Favicons-->
-    <!-- ===============================================-->
+    <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicons/favicon.ico">
     <link rel="manifest" href="assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
@@ -22,206 +18,477 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- ===============================================-->
-    <!--    Stylesheets-->
-    <!-- ===============================================-->
+    <!-- Stylesheets -->
     <link href="assets/css/theme.css" rel="stylesheet" />
     <link href="assets/css/compare_style.css" rel="stylesheet" />
+   <!--  <style> 
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Sidebar (Filter Section) */
+.filter {
+    width: 280px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.filter h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.filter label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.filter select,
+.filter input[type="number"],
+.filter input[type="range"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.filter select:hover,
+.filter input[type="number"]:hover,
+.filter input[type="range"]:hover {
+    border-color: #ff6600;
+}
+
+.filter .sort-by {
+    margin-bottom: 20px;
+}
+
+/* Product List Section */
+.product-list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.product-list #productList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    overflow: hidden;
+}
+
+.card .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.card .text-section {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.card .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.card .card-text {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.card .price-section {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+/* Layout for Sidebar and Product List */
+.compare-structure {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+.sidebar-price {
+    flex: 0 0 280px;
+}
+
+.product-list {
+    flex: 1;
+    max-width: calc(100% - 320px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .compare-structure {
+        flex-direction: column;
+    }
+
+    .sidebar-price {
+        flex: 1;
+    }
+
+    .product-list {
+        max-width: 100%;
+    }
+}
+
+
+    </style> -->
+    <style>
+        body {
+                 font-family: Arial, sans-serif;
+                 margin: 0;
+                 padding: 0;
+                 background-color: #f5f5f5;
+             }
+             
+             .container {
+                 display: flex;
+                 padding: 20px;
+             }
+             .filter {
+                 width: 300px;
+                
+                 background-color: #fff;
+                 padding: 20px;
+                 border-radius: 8px;
+                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                 margin-right: 20px;
+             }
+             .filter h2 {
+                 font-size: 24px;
+                 color: #ff6600;
+                 margin-bottom: 20px;
+             }
+             .filter label {
+                 font-size: 16px;
+                 color: #666;
+                 display: block;
+                 margin-bottom: 10px;
+             }
+             .filter input[type="range"] {
+                 width: 100%;
+                 margin-bottom: 20px;
+             }
+             .filter input[type="number"] {
+                 width: 100%;
+                 padding: 5px;
+                 font-size: 16px;
+                 border: 1px solid #ccc;
+                 border-radius: 4px;
+                 margin-bottom: 20px;
+             }
+             .filter .sort-by {
+                 margin-bottom: 20px;
+             }
+             .filter .sort-by label {
+                 font-size: 16px;
+                 color: #666;
+                 display: block;
+                 margin-bottom: 10px;
+             }
+             .filter .sort-by select {
+                 width: 100%;
+                 padding: 5px;
+                 font-size: 16px;
+                 border: 1px solid #ccc;
+                 border-radius: 4px;
+             }
+           
+                 .filter .restaurant-by {
+                 margin-bottom: 20px;
+             }
+             .filter .restaurant-by label {
+                 font-size: 16px;
+                 color: #666;
+                 display: block;
+                 margin-bottom: 10px;
+             }
+             .filter .restaurant-by select {
+                 width: 100%;
+                 padding: 5px;
+                 font-size: 16px;
+                 border: 1px solid #ccc;
+                 border-radius: 4px;
+             }
+
+             .results {
+                 flex: 1;
+             }
+             .result-item {
+                 background-color: #fff;
+                 padding: 20px;
+                 border-radius: 8px;
+                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                 margin-bottom: 20px;
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: center;
+             }
+             .result-item h3 {
+                 font-size: 20px;
+                 margin: 0;
+                 color: #333;
+             }
+             .result-item p {
+                 font-size: 14px;
+                 color: #666;
+                 margin: 5px 0;
+             }
+             .result-item .price {
+                 font-size: 18px;
+                 font-weight: bold;
+                 color: #4CAF50;
+             }
+             /* General styles for inputs and select elements */
+input, select {
+    width: 100%; /* Makes them the same width */
+    padding: 10px; /* Add spacing inside */
+    font-size: 16px; /* Ensure consistent font size */
+    margin-bottom: 10px; /* Add space between elements */
+    border: 1px solid #ccc; /* Standard border style */
+    border-radius: 4px; /* Smooth corners */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Specific styles for the restaurant dropdown */
+.styled-select {
+    background-color: #fff; /* White background for better contrast */
+    appearance: none; /* Remove browser-specific styling */
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Chrome/Safari */
+    cursor: pointer;
+}
+
+/* Optional: Align labels consistently */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px; /* Add space between label and input */
+}
+
+       </style>
+
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container"><a class="navbar-brand d-inline-flex" href="index.html"><img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">DineDeal</span></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
-          <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
-            <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-              <p class="mb-0 fw-bold text-lg-center"><i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">Current Location </span><span>Canada,Windsor</span></p>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-inline-flex" href="index.html"><img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">DineDeal</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
+            <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
+                <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+                    <p class="mb-0 fw-bold text-lg-center"><i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">Current Location </span><span> Waterloo, ON N2J 2W2 </span></p>
+                </div>
+                <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">
+                    <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
+                        <input class="form-control border-0 input-box bg-100" style="width: 300px;" type="search" placeholder="Let's find the perfect meal!" aria-label="Search" id="search-term" />
+                    </div>
+                    <button type="button" class="btn btn-warning" onclick="searchFood(event)">Search</button>
+                </form>
             </div>
-            <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">
-              <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
-                <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search Food" aria-label="Search" />
-              </div> 
-            </form>
-          </div>
         </div>
-      </nav>
+    </nav>
+    
 
-      
-<!--product list-->
-<div class="compare-structure">
-                <div class="sidebar-price">
-                    <div class="main">
-                        <div class="gfg">
-                        
-                        </div>
-                        <div class="custom-wrapper">
-                
-                            <div class="header">
-                                <h2 class="projtitle">
-                                      Price Range 
-                                  </h2>
-                            </div>
-                
-                            <div class="price-input-container">
-                                <div class="price-input">
-                                    <div class="price-field">
-                                        <span>Minimum Price</span>
-                                        <input type="number" 
-                                               class="min-input" 
-                                               value="0" disabled="true">
-                                    </div>
-                                    <div class="price-field">
-                                        <span>Maximum Price</span>
-                                        <input type="number" 
-                                               class="max-input"    
-                                               value="100" disabled="true">
-                                    </div>
-                                </div>
-                                <div class="slider-container">
-                                    <div class="price-slider">
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Slider -->
-                            <div class="range-input">
-                                <input type="range" 
-                                       class="min-range" 
-                                       min="0" 
-                                       max="100" 
-                                       value="0" 
-                                       step="1">
-                                <input type="range" 
-                                       class="max-range" 
-                                       min="0" 
-                                       max="100" 
-                                       value="100" 
-                                       step="1">
-                            </div>
-                        </div>
-                        <div class="header">
-                            <h2 class="projtitle">
-                                  Rating
-                              </h2>
-                              <div class="price-field">
-                                <span>Maximum Rating</span>
-                                <div class="value"></div>
-                            </div>
-                              <div class="containers">
-                                <input type="range" min="0" max="5" value="0" class="slider" id="range">
-                                
-                              </div>
-                        </div>
-                   
+    <!--product list Side Bar-->
+
+    <div class="compare-structure">
+        <div class="sidebar-price">
+            <div class="container">
+                <div class="filter">
+                    <div class="sort-by">
+                        <p></p>
+                        <h2 for="sort-by">Sort by</h2>
+                        <select id="sort-by" class="styled-select">
+                            <option value="low-to-high">Low to High</option>
+                            <option value="high-to-low">High to Low</option>
+                        </select>
                     </div>
-
-
+                    <h2>Price Range</h2>
+                    <label for="min-price">Minimum Price</label>
+                    <input id="min-price" type="number" value="0" />
+                    <label for="max-price">Maximum Price</label>
+                    <input id="max-price" type="number" value="100" />
+    
+                    <h2 for="restaurant">Restaurant</h2>
+                    <label for="restaurant">Select Restaurant</label>
+                    <select id="restaurant" class="styled-select">
+                        <option value="all">All</option>
+                        <option value="Kachiguda Junction">Kachiguda Junction</option>
+                        <option value="Raja Chettinad">Raja Chettinad</option>
+                        <option value="Sardar Ji">Sardar Ji</option>
+                        <option value="Mannas Food">Manna's Food</option>
+                    </select>
                 </div>
+            </div>
+        </div>
+    </div>
+    
 
+    
+    
+    
+    
+    <!-- Product List Section for Search Results -->
+    
+    <div id="searchResults" class="product-list">
+        <div id="productList"></div> <!-- Results will be displayed here -->
+    
+    </div>
+    <!-- JavaScript for Search -->
+    <script>
+        // Utility function to get query parameters from the URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+    
+        // Populate the search field and trigger the search on page load
+        window.onload = function () {
+            const searchTerm = getQueryParam('term');
+            const searchInput = document.getElementById('search-term');
+    
+            if (searchTerm) {
+                searchInput.value = decodeURIComponent(searchTerm); // Set the search term in the input field
+                searchFood(); // Automatically search for the term
+            }
+        };
+        async function searchFood(event) {
+    if (event) event.preventDefault(); // Prevent form submission (if triggered by button)
 
+    const searchTerm = document.getElementById('search-term').value.trim();
+    if (!searchTerm) {
+        alert("Please enter a search input");
+        return;
+    }
 
-                <div class="product-list">
-                        
-                    <div class="card dark" data-price="9" data-rating="4.5" data-name="Subway's Veggie Delight">
-                        <img src="assets/img/gallery/sub-sandwich.png" class="card-img-top" alt="Subway's Veggie Delight">
-                        <div class="card-body">
-                            <div class="text-section">
-                                <h5 class="card-title fw-bold">Subway's Veggie Delight</h5>
-                                <p class="card-text">Customizable vegetable and sauce options stuffed in 4 types of bread.</p>
-                            </div>
-                            <div class="cta-section">
-                                <a href="#" class="btn btn-success">$9</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                        <div class="card dark" data-price="11" data-rating="4.0" data-name="Chess Burger">
-                        <img src="assets/img/gallery/burger.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="text-section">
-                                <h5 class="card-title fw-bold">Chess Burger</h5>
-                                <p class="card-text">It includes Variety of customizable vegetable and many options for sauces stuffed in 4 types of bread options  </p>
-                            </div>
-                            <div class="cta-section">
-                                
-                                <a href="#" class="btn btn-success">$11</a>
-                            </div>
-                        </div>
-                    </div><div class="card dark" data-price="11" data-rating="4.0" data-name="Mac Burger">
-                        <img src="assets/img/gallery/cheese-burger.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="text-section">
-                                <h5 class="card-title fw-bold">Mac Burger</h5>
-                                <p class="card-text">It includes Variety of customizable vegetable and many options for sauces stuffed in 4 types of bread options  </p>
-                            </div>
-                            <div class="cta-section">
-                                
-                                <a href="#" class="btn btn-success">$11</a>
-                            </div>
-                        </div>
-                        </div><div class="card dark" data-price="13" data-rating="4.2" data-name="Chowmein">
-                        <img src="assets/img/gallery/chowmein.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="text-section">
-                                <h5 class="card-title fw-bold">Chowmein</h5>
-                                <p class="card-text">It includes Variety of customizable vegetable and many options for sauces stuffed in 4 types of bread options  </p>
-                            </div>
-                            <div class="cta-section">
-                                
-                                <a href="#" class="btn btn-success">$13</a>
-                            </div>
-                        </div>
-                        </div><div class="card dark" data-price="15" data-rating="2.5" data-name="Vegetable Sandwich">
-                            <img src="assets/img/gallery/crispy-sandwiches.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <div class="text-section">
-                                    <h5 class="card-title fw-bold">Vegetable Sandwich</h5>
-                                    <p class="card-text">It includes Variety of customizable vegetable and many options for sauces stuffed in 4 types of bread options  </p>
-                                </div>
-                                <div class="cta-section">
-                                    
-                                    <a href="#" class="btn btn-success">$15</a>
-                                </div>
-                            </div>
-                        </div><div class="card dark">
-                        <img src="assets/img/gallery/crispy-sandwitch.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="text-section">
-                                <h5 class="card-title fw-bold">Butter Toast </h5>
-                                <p class="card-text">It includes Variety of customizable vegetable and many options for sauces stuffed in 4 types of bread options  </p>
-                            </div>
-                            <div class="cta-section">
-                                
-                                <a href="#" class="btn btn-success">$15</a>
-                            </div>
-                        </div>
-                        </div><div class="card dark">
-                        <img src="assets/img/gallery/steak.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="text-section">
-                                <h5 class="card-title fw-bold">Steak</h5>
-                                <p class="card-text">It includes Variety of customizable vegetable and many options for sauces stuffed in 4 types of bread options  </p>
-                            </div>
-                            <div class="cta-section">
-                                
-                                <a href="#" class="btn btn-success">$18</a>
-                            </div>
-                        </div>
-                        </div><div class="card dark">
-                        <img src="assets/img/gallery/taco-bell.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="text-section">
-                                <h5 class="card-title fw-bold">Taco Bell</h5>
-                                <p class="card-text">It includes Variety of customizable vegetable and many options for sauces stuffed in 4 types of bread options  </p>
-                            </div>
-                            <div class="cta-section">
-                                
-                                <a href="#" class="btn btn-success">$18</a>
-                            </div>
-                        </div>
-                        </div>
-                </div>
-</div>
-<script src="assets/js/compare_price.js"></script>
-<script src="assets/js/rating.js"></script>
+    try {
+        const response = await fetch(`http://localhost:3000/search?term=${encodeURIComponent(searchTerm)}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        const data = await response.json();
+
+        renderItems(data); // Render items dynamically
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById("productList").innerHTML = "<p>Error fetching data. Please try again later.</p>";
+    }
+}
+
+function renderItems(items) {
+    const productList = document.getElementById("productList");
+    const sortBy = document.getElementById("sort-by").value;
+    const selectedRestaurant = document.getElementById("restaurant").value;
+
+    // Get price range inputs
+    const minPrice = parseFloat(document.getElementById("min-price").value) || 0;
+    const maxPrice = parseFloat(document.getElementById("max-price").value) || Infinity;
+
+    // Filter by restaurant and price range
+    let filteredItems = items.filter(item => {
+        const itemPrice = parseFloat(item.cost) || 0;
+        const restaurantMatch = selectedRestaurant === 'all' || item.Restaurant_Name.toLowerCase() === selectedRestaurant.toLowerCase();
+        const priceMatch = itemPrice >= minPrice && itemPrice <= maxPrice;
+        return restaurantMatch && priceMatch;
+    });
+
+    // Sort the filtered items by price
+    filteredItems.sort((a, b) => {
+        if (sortBy === "low-to-high") {
+            return a.cost - b.cost;
+        } else {
+            return b.cost - a.cost;
+        }
+    });
+
+    productList.innerHTML = ''; // Clear the list
+
+    if (filteredItems.length > 0) {
+        filteredItems.forEach(item => {
+            const itemName = item.item_name || 'No Name';
+            const itemDescription = item.item_description || 'No description available';
+            const itemPrice = item.cost || 'N/A';
+            const restaurantName = item.Restaurant_Name || 'Unknown';
+
+            const productCard = document.createElement("div");
+            productCard.classList.add("card", "dark");
+            productCard.innerHTML = `
+    <div class="card-body" style="width: 920px; height: 160px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <div class="text-section" style="flex: 1; margin-right: 10px;">
+            <h5 class="card-title fw-bold" style="margin: 0; font-size: 18px;">${itemName}</h5>
+            <p class="card-text truncated-description" 
+               style="margin: 5px 0; font-size: 14px; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer;" 
+               title="${itemDescription}">
+                ${itemDescription}
+            </p>
+            <p class="card-text" style="margin: 5px 0; font-size: 14px;"><strong>Restaurant:</strong> ${restaurantName}</p>
+        </div>
+        <div class="cta-section" style="text-align: center;">
+            <a href="#" class="btn btn-success" style="padding: 10px 20px; font-size: 16px; border-radius: 5px;">$${itemPrice}</a>
+        </div>
+    </div>
+            `;
+            productList.appendChild(productCard);
+        });
+    } else {
+        productList.innerHTML = "<p>No results found</p>";
+    }
+}
+
+// Event Listeners for Filtering and Sorting
+document.getElementById("sort-by").addEventListener("change", () => searchFood());
+document.getElementById("restaurant").addEventListener("change", () => searchFood());
+document.getElementById("min-price").addEventListener("input", () => searchFood());
+document.getElementById("max-price").addEventListener("input", () => searchFood());
+
+        
+</script>
+    
+    
 </body>
+
 </html>
+
+
+
+
+

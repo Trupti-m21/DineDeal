@@ -47,7 +47,8 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
           <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
             <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-              <p class="mb-0 fw-bold text-lg-center"><i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">Current Location </span><span>Canada,Windsor</span></p>
+              <p class="mb-0 fw-bold text-lg-center"><i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">Current Location </span><span id="currentLocation">Waterloo, ON N2J 2W2</span></p>
+              
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginSection"> 
@@ -55,15 +56,27 @@
                         <span id="username" class="text-warning fw-bold me-2"></span>
                         <a class="btn btn-danger" id="logoutButton">Logout</a>
                     </div>
-                    <div id="socialLoginButtons">
-                        <a class="btn btn-white shadow-warning text-warning" href="login.html"> <i class="fas fa-user me-2"></i>Login</a>
-                    </div>
+                    
                 </form> 
             </div>
-          <!--  <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0"> 
-              <a class="btn btn-white shadow-warning text-warning" href="login.html"> <i class="fas fa-user me-2"></i>Login</a>
-            </form> 
-            Replace your existing login button section with this -->
+          <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0"> 
+              <a class="btn btn-white shadow-warning text-warning" id="openLoginButton"> <i class="fas fa-user me-2"></i>Login</a>
+          </form> 
+
+          <script>
+        // Open the login page as a popup
+        document.getElementById('openLoginButton').addEventListener('click', function () {
+            const width = 400; // Width of the popup
+            const height = 600; // Height of the popup
+            const left = (screen.width - width) / 2; // Center horizontally
+            const top = (screen.height - height) / 2; // Center vertically
+            const popupFeatures = `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no`;
+
+            // Open the login.html in a new popup window
+            window.open('login.html', 'LoginPopup', popupFeatures);
+        });
+    </script>
+            
 <!-- <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginSection"> 
     <div id="userGreeting" class="d-none">
         <span id="username" class="text-warning fw-bold me-2"></span>
@@ -95,15 +108,29 @@
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                       <form class="row gx-2 gy-2 align-items-center">
                         <div class="col">
-                          <div class="input-group-icon"><i class="fas fa-map-marker-alt text-danger input-box-icon"></i>
+                          
                             <label class="visually-hidden" for="inputDelivery">Address</label>
-                            <input class="form-control input-box form-foodwagon-control" id="inputDelivery" type="text" placeholder="Enter Resturant,Food" />
-                          </div>
+                            <input class="form-control input-box form-foodwagon-control" id="search-term" type="text" placeholder="🍣Discover flavors you love. Start typing..." />
+                          
                         </div>
                         <div class="d-grid gap-3 col-sm-auto">
-                           <a class="btn btn-danger" href="compare.html">Find Food</a>
+                          <button type="button" class="btn btn-warning" onclick="redirectToCompare()">Search</button>
                         </div>
                       </form>
+
+                      <script>
+
+                        function redirectToCompare() {
+                          const searchTerm = document.getElementById('search-term').value.trim();
+                          if (!searchTerm) {
+                              alert("Please enter a search input");
+                              return;
+                          }
+                          // Redirect to compare.html with the search term as a query parameter
+                          window.location.href = `compare.html?term=${encodeURIComponent(searchTerm)}`;
+                      }
+                      </script>
+
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                       <form class="row gx-4 gy-2 align-items-center">
@@ -709,12 +736,16 @@
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
-    <script src="vendors/@popperjs/popper.min.js"></script>
-    <script src="vendors/bootstrap/bootstrap.min.js"></script>
-    <script src="vendors/is/is.min.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-    <script src="vendors/fontawesome/all.min.js"></script>
-    <script src="assets/js/theme.js"></script>
+    
+   
+
+<script src="vendors/@popperjs/popper.min.js"></script>
+<script src="vendors/bootstrap/bootstrap.min.js"></script>
+<script src="vendors/is/is.min.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="vendors/fontawesome/all.min.js"></script>
+<script src="assets/js/theme.js"></script>
+<script src="assets\js\login.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
   </body>

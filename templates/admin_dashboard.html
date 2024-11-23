@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .header {
+            background-color: #ff6600;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .content {
+            padding: 2rem;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .logo-img {
+            width: 150px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <!-- Added the logo.svg -->
+            <img class="d-inline-block" src="{{ url_for('static', filename='assets/img/gallery/logo.svg') }}" alt="logo">
+        </div>
+        <h1>Admin Dashboard</h1>
+    </div>
+    <div class="content">
+        <p>Welcome to the admin dashboard!</p>
+        <!-- Dashboard content goes here -->
+    </div>
+</body>
+</html>

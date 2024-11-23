@@ -78,7 +78,7 @@ print("DataFrame to be inserted:")
 print(df)
 
 # Connect to the database
-engine = create_engine("mysql+pymysql://root:Shiva%40123@localhost/dinedeal")
+engine = create_engine("mysql+pymysql://admin:Vclass123$@dinedeal-db.cjs0ssiwsf2c.us-east-1.rds.amazonaws.com/dinedeal")
 
 # Insert DataFrame into the kachiguda_menu table
 try:

@@ -43,53 +43,211 @@
     <!-- ===============================================-->
     <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container"><a class="navbar-brand d-inline-flex" href="index.html"><img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">DineDeal</span></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
+        <div class="container">
+          <a class="navbar-brand d-inline-flex" href="index.html">
+            <img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" />
+            <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">DineDeal</span>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
           <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
             <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-              <p class="mb-0 fw-bold text-lg-center"><i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">Current Location </span><span id="currentLocation">Waterloo, ON N2J 2W2</span></p>
-              
+              <p class="mb-0 fw-bold text-lg-center">
+                <i class="fas fa-map-marker-alt text-warning mx-2"></i>
+                <span id="currentLocation">Fetching location...</span>
+              </p>
             </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginSection"> 
-                    <div id="userGreeting" class="d-none">
-                        <span id="username" class="text-warning fw-bold me-2"></span>
-                        <a class="btn btn-danger" id="logoutButton">Logout</a>
-                    </div>
-                    
-                </form> 
-            </div>
-          <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0"> 
-              <a class="btn btn-white shadow-warning text-warning" id="openLoginButton"> <i class="fas fa-user me-2"></i>Login</a>
-          </form> 
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item" id="recentViewedLink" style="display: none;">
+                <a class="nav-link  fw-bold" href="searchHistory.html" style="color: #444;">
+                  <i class="fas fa-history me-1" style="color: #444;"></i> Recent Viewed
+                </a>
+              </li>
+            </ul>
+            <p></p>
+            <p></p>
+            <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginSection">
+              <div id="userGreeting" class="d-none">
+                <span id="username" class="text-warning fw-bold me-2"></span>
+                <a class="btn btn-danger" id="logoutButton">Logout</a>
+              </div>
+            </form>
+            <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginButtonSection">
+              <a class="btn btn-white shadow-warning text-warning" id="openLoginButton">
+                <i class="fas fa-user me-2"></i>Login </a>
+            </form>
 
-          <script>
-        // Open the login page as a popup
-        document.getElementById('openLoginButton').addEventListener('click', function () {
-            const width = 400; // Width of the popup
-            const height = 600; // Height of the popup
-            const left = (screen.width - width) / 2; // Center horizontally
-            const top = (screen.height - height) / 2; // Center vertically
-            const popupFeatures = `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no`;
-
-            // Open the login.html in a new popup window
-            window.open('login.html', 'LoginPopup', popupFeatures);
-        });
-    </script>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                console.log("Document loaded.");
             
-<!-- <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginSection"> 
-    <div id="userGreeting" class="d-none">
-        <span id="username" class="text-warning fw-bold me-2"></span>
-        <a class="btn btn-danger" id="logoutButton">Logout</a>
-    </div>
-    <div id="socialLoginButtons">
-        <a class="btn btn-white shadow-warning text-warning" id="googleLoginButton">Login with Google</a>
-        <a class="btn btn-white shadow-warning text-warning" id="facebookLoginButton">Login with Facebook</a>
-    </div>
-</form> -->
+                // Function to extract access token from URL
+                const getAccessTokenFromUrl = () => {
+                  const hash = window.location.hash.substring(1);
+                  const params = new URLSearchParams(hash);
+                  const token = params.get("access_token");
+                  if (token) {
+                    console.log("Access token found:", token);
+                    // Remove the token from the URL for security
+                    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+                  } else {
+                    console.log("No access token found in the URL.");
+                  }
+                  return token;
+                };
+            
+                // Function to fetch user information using the access token
+                const fetchGoogleUserInfo = (token) => {
+                  const userInfoUrl = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${token}`;
+                  fetch(userInfoUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                      console.log("User data fetched:", data);
+                      const username = data.name || "User";
+                      // Store user info in localStorage
+                      localStorage.setItem("username", username);
+                      displayUserOnHomePage();
+                    })
+                    .catch((error) => console.error("Error fetching user info:", error));
+                };
+                function checkLoginStatus() {
+                // Simulate login status check
+                let isLoggedIn = localStorage.getItem('isLoggedIn'); // 'true' if user is logged in
+
+               // If the user is logged in, show the "Recent Viewed" link
+               if (isLoggedIn === 'true') {
+                  document.getElementById('recentViewedNavItem').style.display = 'block';
+               } else {
+                   document.getElementById('recentViewedNavItem').style.display = 'none';
+               }
+            }
+            // Call the checkLoginStatus function when the page loads
+                window.onload = checkLoginStatus;
+            
+                // Display user info on the homepage
+                  const displayUserOnHomePage = () => {
+                  const username = localStorage.getItem("username");
+                  const userGreeting = document.getElementById("userGreeting");
+                  const loginButtonSection = document.getElementById("loginButtonSection");
+                  const usernameElement = document.getElementById("username");
+                  const recentViewedLink = document.getElementById("recentViewedLink");
+                    
+                  if (username) {
+                    console.log("User is logged in:", username);
+                    usernameElement.textContent = `Welcome, ${username}`;
+                    userGreeting.classList.remove("d-none");
+                    loginButtonSection.classList.add("d-none");
+
+                    // Show Recent Viewed link
+                    recentViewedLink.style.display = "block";
+                  } else {
+                    console.log("No user is logged in.");
+                    userGreeting.classList.add("d-none");
+                    loginButtonSection.classList.remove("d-none");
+                    // Hide Recent Viewed link
+                    recentViewedLink.style.display = "none";
+
+                  }
+                };
+            
+                // Logout functionality
+                const setupLogout = () => {
+                  const logoutButton = document.getElementById("logoutButton");
+                  if (logoutButton) {
+                    logoutButton.addEventListener("click", () => {
+                      console.log("Logging out...");
+                      localStorage.removeItem("username");
+                      localStorage.removeItem("google_access_token");
+                      window.location.href = "index.html";
+                    });
+                  }
+                };
+            
+                // Fetch and display location
+                const fetchAndDisplayLocation = (latitude, longitude) => {
+                  const locationElement = document.getElementById("currentLocation");
+            
+                  if (latitude && longitude) {
+                    const geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+            
+                    fetch(geocodeUrl)
+                      .then((response) => response.json())
+                      .then((data) => {
+                        if (data && data.display_name) {
+                          const locationParts = data.display_name.split(", ");
+                          const city = locationParts[1]; // Extract "Malindi"
+                          const country = locationParts[locationParts.length - 1]; // Extract "Kenya"
+                          locationElement.textContent = `Current Location: ${city}, ${country}`;
+                        } else {
+                          locationElement.textContent = "Location not found.";
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Error fetching location:", error);
+                        locationElement.textContent = "Unable to fetch location.";
+                      });
+                  } else {
+                    locationElement.textContent = "Coordinates not available.";
+                  }
+                };
+            
+                // Get coordinates using Geolocation API
+                const getCoordinates = () => {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                      (position) => {
+                        const { latitude, longitude } = position.coords;
+                        console.log(`Coordinates: Lat ${latitude}, Long ${longitude}`);
+                        fetchAndDisplayLocation(latitude, longitude);
+                      },
+                      (error) => {
+                        console.error("Error fetching coordinates:", error);
+                        const locationElement = document.getElementById("currentLocation");
+                        locationElement.textContent = "Unable to fetch coordinates.";
+                      }
+                    );
+                  } else {
+                    console.log("Geolocation not supported.");
+                    const locationElement = document.getElementById("currentLocation");
+                    locationElement.textContent = "Geolocation not supported.";
+                  }
+                };
+            
+                // Main logic
+                const accessToken = getAccessTokenFromUrl();
+                if (accessToken) {
+                  console.log("Using extracted token.");
+                  localStorage.setItem("google_access_token", accessToken);
+                  fetchGoogleUserInfo(accessToken);
+                } else {
+                  console.log("Using stored token.");
+                  const storedToken = localStorage.getItem("google_access_token");
+                  if (storedToken) {
+                    fetchGoogleUserInfo(storedToken);
+                  } else {
+                    console.log("No valid token found.");
+                  }
+                }
+            
+                setupLogout();
+                getCoordinates(); // Automatically get and use browser's geolocation
+              });
+            </script>
+            
           </div>
         </div>
       </nav>
+      
+
       <section class="py-5 overflow-hidden bg-primary" id="home">
         <div class="container">
           <div class="row flex-center">

@@ -315,8 +315,68 @@ label {
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
             <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
                 <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                    <p class="mb-0 fw-bold text-lg-center"><i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">Current Location </span><span> Waterloo, ON N2J 2W2 </span></p>
+                    <p class="mb-0 fw-bold text-lg-center"><i class="fas fa-map-marker-alt text-warning mx-2"></i><span id="currentLocation">Fetching location...</span></p>
                 </div>
+                <script>
+
+                document.addEventListener("DOMContentLoaded", () => {
+                console.log("Document loaded.");
+
+                        // Fetch and display location
+                    const fetchAndDisplayLocation = (latitude, longitude) => {
+                  const locationElement = document.getElementById("currentLocation");
+            
+                  if (latitude && longitude) {
+                    const geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+            
+                    fetch(geocodeUrl)
+                      .then((response) => response.json())
+                      .then((data) => {
+                        if (data && data.display_name) {
+                          const locationParts = data.display_name.split(", ");
+                          const city = locationParts[1]; // Extract "Malindi"
+                          const country = locationParts[locationParts.length - 1]; // Extract "Kenya"
+                          locationElement.textContent = `Current Location: ${city}, ${country}`;
+                        } else {
+                          locationElement.textContent = "Location not found.";
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Error fetching location:", error);
+                        locationElement.textContent = "Unable to fetch location.";
+                      });
+                  } else {
+                    locationElement.textContent = "Coordinates not available.";
+                  }
+                };
+            
+                // Get coordinates using Geolocation API
+                const getCoordinates = () => {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                      (position) => {
+                        const { latitude, longitude } = position.coords;
+                        console.log(`Coordinates: Lat ${latitude}, Long ${longitude}`);
+                        fetchAndDisplayLocation(latitude, longitude);
+                      },
+                      (error) => {
+                        console.error("Error fetching coordinates:", error);
+                        const locationElement = document.getElementById("currentLocation");
+                        locationElement.textContent = "Unable to fetch coordinates.";
+                      }
+                    );
+                  } else {
+                    console.log("Geolocation not supported.");
+                    const locationElement = document.getElementById("currentLocation");
+                    locationElement.textContent = "Geolocation not supported.";
+                  }
+                };
+
+                getCoordinates();
+
+            }); 
+
+                </script>
                 <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">
                     <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
                         <input class="form-control border-0 input-box bg-100" style="width: 300px;" type="search" placeholder="Let's find the perfect meal!" aria-label="Search" id="search-term" />
@@ -376,13 +436,13 @@ label {
     <!-- JavaScript for Search -->
     <script>
         // Utility function to get query parameters from the URL
-        function getQueryParam(param) {
+    function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
     
         // Populate the search field and trigger the search on page load
-        window.onload = function () {
+    window.onload = function () {
             const searchTerm = getQueryParam('term');
             const searchInput = document.getElementById('search-term');
     
@@ -400,6 +460,9 @@ label {
         return;
     }
 
+    // Save the search term to localStorage
+    saveSearchHistory(searchTerm);
+
     try {
         const response = await fetch(`http://localhost:3000/search?term=${encodeURIComponent(searchTerm)}`);
         if (!response.ok) {
@@ -413,6 +476,23 @@ label {
         document.getElementById("productList").innerHTML = "<p>Error fetching data. Please try again later.</p>";
     }
 }
+
+// Save search term in localStorage
+function saveSearchHistory(term) {
+    let searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    if (!searchHistory.includes(term)) {
+        searchHistory.push(term);
+    }
+
+    // Limit the search history to the last 10 terms
+    if (searchHistory.length > 10) {
+        searchHistory.shift(); // Remove the oldest entry
+    }
+
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
+
+
 
 function renderItems(items) {
     const productList = document.getElementById("productList");
@@ -448,24 +528,34 @@ function renderItems(items) {
             const itemDescription = item.item_description || 'No description available';
             const itemPrice = item.cost || 'N/A';
             const restaurantName = item.Restaurant_Name || 'Unknown';
+            const restaurantLink = item.restaurant_link || '#'; // Default to '#' if no link available
 
             const productCard = document.createElement("div");
             productCard.classList.add("card", "dark");
             productCard.innerHTML = `
-    <div class="card-body" style="width: 920px; height: 160px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div class="text-section" style="flex: 1; margin-right: 10px;">
-            <h5 class="card-title fw-bold" style="margin: 0; font-size: 18px;">${itemName}</h5>
-            <p class="card-text truncated-description" 
-               style="margin: 5px 0; font-size: 14px; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer;" 
-               title="${itemDescription}">
-                ${itemDescription}
-            </p>
-            <p class="card-text" style="margin: 5px 0; font-size: 14px;"><strong>Restaurant:</strong> ${restaurantName}</p>
-        </div>
-        <div class="cta-section" style="text-align: center;">
-            <a href="#" class="btn btn-success" style="padding: 10px 20px; font-size: 16px; border-radius: 5px;">$${itemPrice}</a>
-        </div>
-    </div>
+                <div class="card-body" style="width: 920px; height: 160px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="text-section" style="flex: 1; margin-right: 10px;">
+                        <h5 class="card-title fw-bold" style="margin: 0; font-size: 18px;">${itemName}</h5>
+                        <p class="card-text truncated-description" 
+                            style="margin: 5px 0; font-size: 14px; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer;" 
+                            title="${itemDescription}">
+                            ${itemDescription}
+                        </p>
+                        <p class="card-text" style="margin: 5px 0; font-size: 14px;">
+                            <strong>Restaurant:</strong> <a href="${restaurantLink}" target="_blank" style="color: #007bff; text-decoration: none;">${restaurantName}</a>
+                        </p>
+                    </div>
+                    <div class="cta-section" style="position: absolute; top: 23px; right: 10px; cursor: pointer; font-size: 16px;">
+                         <a href="#" class="btn btn-success" style="padding: 10px 20px; font-size: 16px; border-radius: 5px;">$${itemPrice}</a>
+                    </div>
+                    <div class="cta-section" style="position: absolute; bottom: 10px; right: 10px; cursor: pointer; font-size: 20px;">
+                        <a href="javascript:void(0);" class="favorite-btn" style="color: #ff5733;" onclick="toggleFavorite(event, '${itemName}', '${itemDescription}', '${itemPrice}', '${restaurantName}', '${restaurantLink}')">
+                        <i class="far fa-heart" id="heart-icon${itemName}"></i> </a>
+                       
+                    </div>
+
+
+                </div>
             `;
             productList.appendChild(productCard);
         });
@@ -474,14 +564,73 @@ function renderItems(items) {
     }
 }
 
-// Event Listeners for Filtering and Sorting
-document.getElementById("sort-by").addEventListener("change", () => searchFood());
-document.getElementById("restaurant").addEventListener("change", () => searchFood());
-document.getElementById("min-price").addEventListener("input", () => searchFood());
-document.getElementById("max-price").addEventListener("input", () => searchFood());
-
-        
 </script>
+<script>
+    // Function to toggle the favorite state
+    function toggleFavorite(event, itemName, itemDescription, itemPrice, restaurantName, restaurantLink) {
+        const heartIcon = event.target.closest('.favorite-btn').querySelector('i');
+        const isFavorite = heartIcon.classList.contains('fas'); // Check if heart is filled
+
+        // If the heart is filled (favorite), remove it from localStorage
+        if (isFavorite) {
+            // Remove from localStorage
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            favorites = favorites.filter(item => item.itemName !== itemName); // Remove the product by name
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+
+            // Change icon back to unfilled
+            heartIcon.classList.remove('fas');
+            heartIcon.classList.add('far');
+        } else {
+            // If it's not filled, add to localStorage
+            const favoriteItem = {
+                itemName,
+                itemDescription,
+                itemPrice,
+                restaurantName,
+                restaurantLink
+            };
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            favorites.push(favoriteItem); // Add new favorite
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+
+            // Change icon to filled
+            heartIcon.classList.remove('far');
+            heartIcon.classList.add('fas');
+        }
+    }
+
+    // Function to load and display favorite products on the favorites page (favorite.html or searchhistory.html)
+    function loadFavorites() {
+        const recentlyViewedContainer = document.getElementById("recentlyViewedContainer");
+        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+        if (favorites.length === 0) {
+            recentlyViewedContainer.innerHTML = "<p>No favorite products yet.</p>";
+        } else {
+            favorites.forEach(favorite => {
+                const productCard = document.createElement("div");
+                productCard.classList.add("card", "dark");
+                productCard.innerHTML = `
+                    <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                        <div class="text-section" style="flex: 1; margin-right: 10px;">
+                            <h5 class="card-title fw-bold">${favorite.itemName}</h5>
+                            <p class="card-text">${favorite.itemDescription}</p>
+                            <p class="card-text"><strong>Restaurant:</strong> <a href="${favorite.restaurantLink}" target="_blank">${favorite.restaurantName}</a></p>
+                            <p class="card-text"><strong>Price:</strong> $${favorite.itemPrice}</p>
+                        </div>
+                    </div>
+                `;
+                recentlyViewedContainer.appendChild(productCard);
+            });
+        }
+    }
+
+    // Call this function when the page loads to display the favorites
+    document.addEventListener("DOMContentLoaded", loadFavorites);
+</script>
+
     
     
 </body>

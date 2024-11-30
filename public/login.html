@@ -2,30 +2,35 @@
 <html lang="en-US">
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet" />
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
     </style>
+    <link href="assets/css/theme.css" rel="stylesheet" />
 </head>
 <body class="flex items-center justify-center min-h-screen bg-white">
     <div class="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
         <div class="text-center">
+            <a class="navbar-brand d-inline-flex" href="index.html">
+                <img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" />
+                <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">DineDeal</span>
+              </a>
+              <p></p>
             <h1 class="text-2xl font-semibold text-gray-900 mb-2">Get the full experience</h1>
             <p class="text-gray-600 mb-6">
                 Compare food prices, plan smarter, and save more on every meal with faster, hassle-free ordering.
-            </p>
-            <button id="facebookLoginButton" class="w-full py-2 mb-3 text-gray-900 bg-gray-200 rounded-lg flex items-center justify-center">
+            </p> <p></p>
+            <!-- <button id="facebookLoginButton" class="w-full py-2 mb-3 text-gray-900 bg-gray-200 rounded-lg flex items-center justify-center">
                 <i class="fab fa-facebook-f text-blue-600 mr-2"></i>
                 Facebook
-            </button>
+            </button> -->
             <button id="googleLoginButton" class="w-full py-2 mb-3 text-gray-900 bg-gray-200 rounded-lg flex items-center justify-center">
                 <i class="fab fa-google text-red-600 mr-2"></i>
                 Google
             </button>
-            
             <p class="text-gray-600 text-sm">
                 By continuing, you agree to our
                 <a class="text-blue-600" href="terms.html">Terms of Service</a>
@@ -34,6 +39,68 @@
             </p>
         </div>
     </div>
-    <script src="assets\js\login.js"></script>
+    <script>
+        // Constants for Google and Facebook OAuth
+        console.log("login.js functionality is now inline.");
+        const GOOGLE_CLIENT_ID = "947375457765-3us6cvnqlg56dmi01bv64lqh0i47neur.apps.googleusercontent.com";
+        const FACEBOOK_APP_ID = "542492095402931";
+
+        // Redirect to Google OAuth
+        function redirectToGoogleLogin() {
+            console.log("Redirecting to Google OAuth...");
+            const redirectUri = "http://localhost:3000"; // Update with production URI
+            const scope = "email profile";
+            const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+            window.location.href = url;
+        }
+
+        // Redirect to Facebook OAuth
+        function redirectToFacebookLogin() {
+            console.log("Redirecting to Facebook OAuth...");
+            const redirectUri = "http://localhost:3000"; // Update with production URI
+            const scope = "email";
+            const url = `https://www.facebook.com/v10.0/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+            window.location.href = url;
+        }
+
+        // Extract token from URL fragment
+        function getAccessTokenFromUrl() {
+            console.log("Extracting access token from URL...");
+            const hash = window.location.hash.substring(1); // Extract fragment part of the URL
+            const params = new URLSearchParams(hash);
+            const token = params.get("access_token");
+
+            if (token) {
+                console.log("Access token found:", token);
+                window.history.replaceState(null, "", window.location.pathname + window.location.search);
+            } else {
+                console.log("No access token found in the URL.");
+            }
+            return token;
+        }
+
+        // Attach event listeners after the DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("Document loaded.");
+
+            // Attach Google login listener
+            const googleLoginButton = document.getElementById("googleLoginButton");
+            if (googleLoginButton) {
+                googleLoginButton.addEventListener("click", redirectToGoogleLogin);
+                console.log("Google Login button listener attached.");
+            } else {
+                console.warn("Google Login button not found.");
+            }
+
+            // Attach Facebook login listener
+            const facebookLoginButton = document.getElementById("facebookLoginButton");
+            if (facebookLoginButton) {
+                facebookLoginButton.addEventListener("click", redirectToFacebookLogin);
+                console.log("Facebook Login button listener attached.");
+            } else {
+                console.warn("Facebook Login button not found.");
+            }
+        });
+    </script>
 </body>
 </html>

@@ -4819,6 +4819,7 @@ fieldset:disabled .btn {
 .navbar-nav .nav-link {
   padding-right: 0;
   padding-left: 0;
+  color: #333333;
 }
 
 .navbar-nav .dropdown-menu {
@@ -18491,6 +18492,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .majestic-tabs .nav-item.show .nav-link {
   border-bottom-color: #F17228;
 }
+
 
 /*-----------------------------------------------
 |   User Styles

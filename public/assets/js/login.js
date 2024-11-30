@@ -1,101 +1,160 @@
-const GOOGLE_CLIENT_ID = "947375457765-3us6cvnqlg56dmi01bv64lqh0i47neur.apps.googleusercontent.com"; // Replace with your Google OAuth Client ID
+// Constants for Google and Facebook OAuth
+console.log("login.js is loaded and executed");
+const GOOGLE_CLIENT_ID = "947375457765-3us6cvnqlg56dmi01bv64lqh0i47neur.apps.googleusercontent.com";
 const FACEBOOK_APP_ID = "542492095402931";
 
-if (window.location.pathname.includes("login.html")) {
-    document.getElementById('googleLoginButton').addEventListener('click', redirectToGoogleLogin);
-    document.getElementById('facebookLoginButton').addEventListener('click', redirectToFacebookLogin);
-}
-
-function redirectToGoogleLogin() {
-    const redirectUri = "http://localhost:3000"; // Use your production redirect URI in deployment
-    const scope = "email profile";
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
-    window.location.href = url;
-}
-
-function redirectToFacebookLogin() {
-    const redirectUri = "http://localhost:3000"; // Use your production redirect URI in deployment
-    const scope = "email";
-    const url = `https://www.facebook.com/v10.0/dialog/oauth?client_id=${FACEBOOK_APP_ID}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
-    window.location.href = url;
-}
-
+// Extract token from URL fragment
 function getAccessTokenFromUrl() {
-    const hash = window.location.hash.substring(1); // Extract the fragment part of the URL
+    console.log("Extracting access token from URL...");
+    const hash = window.location.hash.substring(1); // Extract fragment part of the URL
     const params = new URLSearchParams(hash);
-    const token = params.get('access_token');
+    const token = params.get("access_token");
 
-    // Immediately remove the token from the URL to prevent it from staying in the URL after login
     if (token) {
-        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        console.log("Access token found:", token);
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    } else {
+        console.log("No access token found in the URL.");
     }
-
     return token;
 }
 
-function storeToken(token, platform) {
-    // Store the token securely in localStorage
-    const expiryTime = Date.now() + 3600 * 1000; // Assuming 1 hour validity
-    localStorage.setItem(`${platform}_access_token`, JSON.stringify({ token, expiryTime }));
-}
-
-function handleTokenAfterLogin(platform) {
-    const token = getAccessTokenFromUrl();
-    if (token) {
-        storeToken(token, platform);
-        console.log(`${platform} Access Token:`, token);
-
-        // Fetch user info
-        fetchUser(platform, token);
-    }
-}
-
+// Fetch user info from the platform and update the UI
 function fetchUser(platform, token) {
-    let userInfoUrl;
-    if (platform === 'google') {
-        userInfoUrl = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${token}`;
-    } else if (platform === 'facebook') {
-        userInfoUrl = `https://graph.facebook.com/me?access_token=${token}&fields=name`;
-    }
+    console.log(`Fetching user info for platform: ${platform}`);
+    const userInfoUrl =
+        platform === "google"
+            ? `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${token}`
+            : `https://graph.facebook.com/me?access_token=${token}&fields=name`;
 
     fetch(userInfoUrl)
-        .then(response => response.json())
-        .then(data => {
-            console.log(`${platform} response data:`, data);
-            const username = data.name;
-            localStorage.setItem('username', username);
-            console.log("Logged in user:", username);
-            window.location.href = 'index.html';
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("User data fetched:", data);
+            const username = data.name || "User";
+            localStorage.setItem("username", username);
+            console.log("Username stored in localStorage:", username);
+
+            window.location.href = "index.html";
         })
-        .catch(error => console.error('Error fetching user info:', error));
+        .catch((error) => console.error("Error fetching user info:", error));
 }
 
+// Store token securely in localStorage
+function storeToken(token, platform) {
+    console.log(`Storing token for platform: ${platform}`);
+    const expiryTime = Date.now() + 3600 * 1000; // Token validity (1 hour)
+    localStorage.setItem(`${platform}_access_token`, JSON.stringify({ token, expiryTime }));
+    console.log("Token stored:", token);
+}
+
+
+// Validate token stored in localStorage
 function validateToken(platform) {
+    console.log(`Validating token for platform: ${platform}`);
     const tokenData = JSON.parse(localStorage.getItem(`${platform}_access_token`));
     if (!tokenData || Date.now() > tokenData.expiryTime) {
-        // Token expired or doesn't exist
-        console.warn(`${platform} token expired or invalid. Redirecting to login.`);
+        console.warn("Token expired or invalid for platform:", platform);
         localStorage.removeItem(`${platform}_access_token`);
-        return false;
+        return null;
     }
+    console.log("Token is valid for platform:", platform);
     return tokenData.token;
 }
 
-/// If we are on index.html, handle the token validation and user display
-if (window.location.pathname.includes("index.html")) {
-    const googleToken = validateToken('google');
-    const facebookToken = validateToken('facebook');
 
-    if (googleToken || facebookToken) {
-        console.log('Valid tokens exist. User already logged in.');
 
-        // Display the username on the index.html page
-        const username = localStorage.getItem('username');
-        if (username) {
-            console.log("Username on index.html:", username);
-            document.getElementById('username').innerText = username;  // Display username
-        } else {
-            console.log("No username found in localStorage.");
-        }
+// Display username on the main page (index.html)
+function displayUserOnHomePage() {
+    console.log("Displaying user on the homepage...");
+    const username = localStorage.getItem("username");
+    const userGreeting = document.getElementById("userGreeting");
+    const loginButtonSection = document.getElementById("loginButtonSection");
+    const usernameElement = document.getElementById("username");
+
+    if (username) {
+        console.log("User is logged in:", username);
+        usernameElement.textContent = `Welcome, ${username}`;
+        userGreeting.classList.remove("d-none");
+        loginButtonSection.classList.add("d-none");
+        console.log(localStorage.getItem("username"));
+        console.log(localStorage.getItem("google_access_token"));
+        console.log(localStorage.getItem("facebook_access_token"));
+
+    } else {
+        console.log("No user is logged in.");
+        userGreeting.classList.add("d-none");
+        loginButtonSection.classList.remove("d-none");
     }
 }
+
+// Logout functionality
+function setupLogout() {
+    console.log("Setting up logout functionality...");
+    const logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", () => {
+            console.log("Logging out...");
+            localStorage.removeItem("username");
+            localStorage.removeItem("google_access_token");
+            localStorage.removeItem("facebook_access_token");
+            window.location.href = "index.html";
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Document loaded.");
+  
+    if (window.location.pathname.includes("index.html")) {
+      console.log("Handling homepage behavior...");
+  
+      const googleToken = validateToken("google");
+      const facebookToken = validateToken("facebook");
+  
+      if (googleToken || facebookToken) {
+        displayUserOnHomePage();
+      } else {
+        console.log("No valid token found.");
+      }
+  
+      setupLogout();
+  
+      // Handle location fetching
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            const locationElement = document.getElementById("currentLocation");
+            if (locationElement) {
+              locationElement.textContent = `Lat: ${latitude}, Long: ${longitude}`;
+            }
+          },
+          (error) => {
+            console.error("Error fetching location:", error);
+            const locationElement = document.getElementById("currentLocation");
+            if (locationElement) {
+              locationElement.textContent = "Unable to fetch location.";
+            }
+          }
+        );
+      } else {
+        const locationElement = document.getElementById("currentLocation");
+        if (locationElement) {
+          locationElement.textContent = "Geolocation not supported.";
+        }
+      }
+  
+      // Attach listener to login button
+      const openLoginButton = document.getElementById("openLoginButton");
+      if (openLoginButton) {
+        openLoginButton.addEventListener("click", () => {
+          console.log("Redirecting to login page...");
+          window.location.href = "login.html"; // Navigate to login page
+        });
+      } else {
+        console.warn("Login button not found.");
+      }
+    }
+  });
+  

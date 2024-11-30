@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import Login from './login';
+import Home from "./index";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -92,6 +93,7 @@ function App() {
         {/* Routes */}
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </div>
     </Router>

@@ -39,7 +39,7 @@ app.get('/search', async (req, res) => {
         return res.status(400).send('Search term is required');
     }
 
-    const query = 'SELECT item_name, item_description, cost, Restaurant_Name FROM main_table WHERE item_name LIKE ?';
+    const query = 'SELECT item_name, item_description, cost, Restaurant_Name, restaurant_link FROM main_table WHERE item_name LIKE ?';
     const values = [`%${searchTerm}%`];
 
     try {

@@ -1,0 +1,529 @@
+<html lang="en">
+ <head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+        <!-- ===============================================-->
+        <!--    Document Title-->
+        <!-- ===============================================-->
+        <title>Dine Deal | Search History</title>
+    
+    
+        <!-- ===============================================-->
+        <!--    Favicons-->
+        <!-- ===============================================-->
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        
+        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicons/favicon.ico">
+        <link rel="manifest" href="assets/img/favicons/manifest.json">
+        <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
+        <meta name="theme-color" content="#ffffff">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+        <!-- ===============================================-->
+        <!--    Stylesheets-->
+        <!-- ===============================================-->
+        <link href="assets/css/theme.css" rel="stylesheet" />  
+    
+      </head>
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            padding: 20px;
+        }
+        .sidebar {
+            width: 200px;
+            padding-right: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .sidebar a.active {
+            background-color: #e6f0ff;
+            border-radius: 5px;
+        }
+        .sidebar a i {
+            margin-right: 10px;
+        }
+        .content {
+            flex-grow: 1;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+        }
+        .header img {
+            height: 30px;
+        }
+        .header .right-menu a {
+            margin-left: 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .header .right-menu a i {
+            margin-right: 5px;
+        }
+        .main-content {
+            max-width: 800px;
+        }
+        .main-content h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .hotel-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .hotel-item img {
+            width: 150px;
+            height: 100px;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+        .hotel-info {
+            flex-grow: 1;
+        }
+        .hotel-info h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .hotel-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .hotel-info .rating {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        .hotel-info .rating .score {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        .hotel-info .details {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        .hotel-info .details i {
+            margin-right: 5px;
+        }
+        .clear-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header .right-menu {
+                margin-top: 10px;
+            }
+            .hotel-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .hotel-item img {
+                margin-bottom: 10px;
+            }
+        }
+        .search-term-box {
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .search-box {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #000;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 5px;
+            text-transform: capitalize;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none; /* Remove border */
+        }
+
+        .search-box:hover {
+            background-color: #444;
+        }
+        #recentlyViewedContainer {
+            padding: 10px;
+        }
+
+  </style>
+ </head>
+ <body>
+    <main class="main" id="top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
+          <div class="container">
+            <a class="navbar-brand d-inline-flex" href="index.html">
+              <img class="d-inline-block" src="assets/img/gallery/logo.svg" alt="logo" />
+              <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">DineDeal</span>
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
+              <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+                <p class="mb-0 fw-bold text-lg-center">
+                  <i class="fas fa-map-marker-alt text-warning mx-2"></i>
+  
+                  <span id="currentLocation">Fetching location...</span>
+                </p>
+              </div>
+              <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginSection">
+                <div id="userGreeting" class="d-none">
+                  <span id="username" class="text-warning fw-bold me-2"></span>
+                  <a class="btn btn-danger" id="logoutButton">Logout</a>
+                </div>
+              </form>
+              <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0" id="loginButtonSection">
+                <a class="btn btn-white shadow-warning text-warning" id="openLoginButton">
+                  <i class="fas fa-user me-2"></i>Login </a>
+              </form>
+  
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  console.log("Document loaded.");
+              
+                  // Function to extract access token from URL
+                  const getAccessTokenFromUrl = () => {
+                    const hash = window.location.hash.substring(1);
+                    const params = new URLSearchParams(hash);
+                    const token = params.get("access_token");
+                    if (token) {
+                      console.log("Access token found:", token);
+                      // Remove the token from the URL for security
+                      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+                    } else {
+                      console.log("No access token found in the URL.");
+                    }
+                    return token;
+                  };
+              
+                  // Function to fetch user information using the access token
+                  const fetchGoogleUserInfo = (token) => {
+                    const userInfoUrl = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${token}`;
+                    fetch(userInfoUrl)
+                      .then((response) => response.json())
+                      .then((data) => {
+                        console.log("User data fetched:", data);
+                        const username = data.name || "User";
+                        // Store user info in localStorage
+                        localStorage.setItem("username", username);
+                        displayUserOnHomePage();
+                      })
+                      .catch((error) => console.error("Error fetching user info:", error));
+                  };
+              
+                  // Display user info on the homepage
+                  const displayUserOnHomePage = () => {
+                    const username = localStorage.getItem("username");
+                    const userGreeting = document.getElementById("userGreeting");
+                    const loginButtonSection = document.getElementById("loginButtonSection");
+                    const usernameElement = document.getElementById("username");
+              
+                    if (username) {
+                      console.log("User is logged in:", username);
+                      usernameElement.textContent = `Welcome, ${username}`;
+                      userGreeting.classList.remove("d-none");
+                      loginButtonSection.classList.add("d-none");
+                    } else {
+                      console.log("No user is logged in.");
+                      userGreeting.classList.add("d-none");
+                      loginButtonSection.classList.remove("d-none");
+                    }
+                  };
+              
+                  // Logout functionality
+                  const setupLogout = () => {
+                    const logoutButton = document.getElementById("logoutButton");
+                    if (logoutButton) {
+                      logoutButton.addEventListener("click", () => {
+                        console.log("Logging out...");
+                        localStorage.removeItem("username");
+                        localStorage.removeItem("google_access_token");
+                        window.location.href = "index.html";
+                      });
+                    }
+                  };
+              
+                  // Fetch and display location
+                  const fetchAndDisplayLocation = (latitude, longitude) => {
+                    const locationElement = document.getElementById("currentLocation");
+              
+                    if (latitude && longitude) {
+                      const geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+              
+                      fetch(geocodeUrl)
+                        .then((response) => response.json())
+                        .then((data) => {
+                          if (data && data.display_name) {
+                            const locationParts = data.display_name.split(", ");
+                            const city = locationParts[1]; // Extract "Malindi"
+                            const country = locationParts[locationParts.length - 1]; // Extract "Kenya"
+                            locationElement.textContent = `Current Location: ${city}, ${country}`;
+                          } else {
+                            locationElement.textContent = "Location not found.";
+                          }
+                        })
+                        .catch((error) => {
+                          console.error("Error fetching location:", error);
+                          locationElement.textContent = "Unable to fetch location.";
+                        });
+                    } else {
+                      locationElement.textContent = "Coordinates not available.";
+                    }
+                  };
+              
+                  // Get coordinates using Geolocation API
+                  const getCoordinates = () => {
+                    if (navigator.geolocation) {
+                      navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                          const { latitude, longitude } = position.coords;
+                          console.log(`Coordinates: Lat ${latitude}, Long ${longitude}`);
+                          fetchAndDisplayLocation(latitude, longitude);
+                        },
+                        (error) => {
+                          console.error("Error fetching coordinates:", error);
+                          const locationElement = document.getElementById("currentLocation");
+                          locationElement.textContent = "Unable to fetch coordinates.";
+                        }
+                      );
+                    } else {
+                      console.log("Geolocation not supported.");
+                      const locationElement = document.getElementById("currentLocation");
+                      locationElement.textContent = "Geolocation not supported.";
+                    }
+                  };
+              
+                  // Main logic
+                  const accessToken = getAccessTokenFromUrl();
+                  if (accessToken) {
+                    console.log("Using extracted token.");
+                    localStorage.setItem("google_access_token", accessToken);
+                    fetchGoogleUserInfo(accessToken);
+                  } else {
+                    console.log("Using stored token.");
+                    const storedToken = localStorage.getItem("google_access_token");
+                    if (storedToken) {
+                      fetchGoogleUserInfo(storedToken);
+                    } else {
+                      console.log("No valid token found.");
+                    }
+                  }
+              
+                  setupLogout();
+                  getCoordinates(); // Automatically get and use browser's geolocation
+                });
+              </script>
+              
+            </div>
+          </div>
+        </nav>
+        <section>
+            <div class="container">
+              <div class="sidebar">
+                <a href="#" id="recentlyViewedTab" class="tab-link active" onclick="showTab(event, 'recentlyViewedContainer')">
+                  <i class="fas fa-history"></i> Recently Viewed
+                </a>
+                <a href="#" id="favoritesTab" class="tab-link" onclick="showTab(event, 'favoritesContainer')">
+                  <i class="fas fa-heart"></i> Favorites
+                </a>
+              </div>
+          
+              <div class="main-content">
+                <!-- Recently Viewed Content -->
+                <div id="recentlyViewedContainer" class="tab-content">
+                  <h1>Recently Viewed</h1>
+                  <div id="recentlyViewedList">
+                    <!-- Recently viewed items will be displayed here -->
+                  </div>
+                  <!-- Ensure this link is rendered properly -->
+                  <a class="clear-link" id="clearRecentlyViewed" href="#">Clear Recently Viewed</a>
+                </div>
+          
+                <!-- Favorites Content -->
+                <div id="favoritesContainer" class="tab-content" style="display: none;">
+                  <h1>Your Favorites</h1>
+                  <div id="favoritesList">
+                    <!-- Favorite items will be displayed here -->
+                  </div>
+                  <a class="clear-link" id="clearFavorites" href="#">Clear Favorites</a>
+                </div>
+              </div>
+            </div>
+          </section>
+ <script>         
+   function showTab(event, tabId) {
+    event.preventDefault();
+
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+
+    // Remove active class from all tab links
+    document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+
+    // Show the selected tab content and set it active
+    document.getElementById(tabId).style.display = 'block';
+    event.currentTarget.classList.add('active');
+
+    if (tabId === 'favoritesContainer') {
+        loadFavorites(); // Load favorites when switching to Favorites tab
+    }
+}
+
+            
+ // Function to display recently viewed products
+function displayRecentlyViewed() {
+    const container = document.getElementById("recentlyViewedList");
+    const searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+    // Clear previous items in the container
+    container.innerHTML = "";
+
+    if (searchHistory.length === 0) {
+        container.innerHTML = "<p>No recently viewed products.</p>";
+        return;
+    }
+
+    // Display each recently viewed item
+    searchHistory.forEach((term) => {
+        const productItem = document.createElement("div");
+        productItem.className = "product-item";
+        productItem.style = "display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;";
+        productItem.innerHTML = `
+            <div style="padding: 10px; display: flex; flex-wrap: wrap;">
+                <strong>${term}</strong> 
+            </div>
+        `;
+        container.appendChild(productItem);
+    });
+}
+
+// Function to clear Recently Viewed items
+function clearRecentlyViewed() {
+    localStorage.removeItem("searchHistory");
+    displayRecentlyViewed(); // Reload the recently viewed section
+}
+
+// Add an event listener to clearRecentlyViewed link
+document.getElementById("clearRecentlyViewed").addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent default link behavior
+    clearRecentlyViewed();
+});
+
+// Call displayRecentlyViewed when page loads
+window.onload = () => {
+    displayRecentlyViewed();
+    loadFavorites(); // Load favorites on page load
+};
+
+// Load Favorites Function
+function loadFavorites() {
+    const container = document.getElementById("favoritesList");
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    container.innerHTML = "";
+
+    if (favorites.length === 0) {
+        container.innerHTML = "<p>No favorite products yet.</p>";
+        return;
+    }
+
+    // Display favorite items
+    favorites.forEach((favorite) => {
+        const productCard = document.createElement("div");
+        productCard.classList.add("card", "dark");
+        productCard.innerHTML = `
+            <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <div class="text-section" style="flex: 1; margin-right: 10px;">
+                    <h5 class="card-title fw-bold">${favorite.itemName}</h5>
+                    <p class="card-text">${favorite.itemDescription}</p>
+                    <p class="card-text"><strong>Restaurant:</strong> <a href="${favorite.restaurantLink}" target="_blank">${favorite.restaurantName}</a></p>
+                    <p class="card-text"><strong>Price:</strong> $${favorite.itemPrice}</p>
+                </div>
+            </div>
+        `;
+        container.appendChild(productCard);
+    });
+}
+
+// Event listener for clearing Favorites
+document.getElementById("clearFavorites").addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent default link behavior
+    localStorage.removeItem("favorites"); // Clear favorites from local storage
+    loadFavorites(); // Reload the favorites section
+});
+</script>                   
+
+
+</main>
+  <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    
+   
+
+    <script src="vendors/@popperjs/popper.min.js"></script>
+    <script src="vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="vendors/is/is.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="vendors/fontawesome/all.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets\js\login.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
+ </body>
+</html>

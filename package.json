@@ -21,6 +21,7 @@
     "react-social-login-buttons": "^4.1.0",
     "reactjs-social-login": "^2.6.3",
     "web-vitals": "^2.1.4"
+    
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,4 +52,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC"
+
 }
+
+

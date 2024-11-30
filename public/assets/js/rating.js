@@ -6,7 +6,7 @@ function calcValue() {
   valuePercentage = (slider.value / slider.max)*100;
     slider.style.background = `linear-gradient(to right, #f59d31 ${valuePercentage}%, #ebe9e7 ${valuePercentage}%)`;
 }
-//comit
+//
 // Update the current slider value (each time you drag the slider handle)
 slider.addEventListener('input', function(){
   calcValue();

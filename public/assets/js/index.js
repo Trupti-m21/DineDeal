@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
 import App from '../../../src/App';
 import reportWebVitals from '../../../src/reportWebVitals';
-// to upload the file 
+// to upload the files
 
 //const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(

@@ -1,74 +1,75 @@
-<<<<<<< HEAD
-# DineDeal
-=======
-# Getting Started with Create React App
+# **DineDeal: Food Price Comparison Website**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+DineDeal is a web application that allows users to search and compare food prices from various restaurants. Built using modern web technologies, DineDeal offers a fast, dynamic, and user-friendly experience for customers looking to make informed dining choices.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## **Project Overview**
 
-### `npm start`
+The primary goal of DineDeal is to enable users to:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Search for food items across multiple restaurants.
+- Compare prices and make informed dining decisions.
+- Securely log in using Google OAuth.
+- Retrieve and manage food product data stored in a MySQL database hosted on AWS RDS.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## **System Flow and Architecture**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The system is designed with a clear separation of concerns between the frontend, backend, and database:
 
-### `npm run build`
+1. **Frontend**: Built with React.js, providing a dynamic user interface.
+2. **Backend**: Developed using Node.js and Express.js, handling API requests and communicating with the database.
+3. **Database**: A MySQL database hosted on AWS RDS, storing restaurant and food item details.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **Technologies Used**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Frontend:**
+- **React.js**: For building a dynamic and interactive user interface.
+- **HTML/CSS**: For structuring and styling the web pages.
+- **JavaScript**: For handling user interactions and sending API requests.
+- **React Router**: For navigation between different views (e.g., Login, Search Results).
 
-### `npm run eject`
+### **Backend:**
+- **Node.js**: For handling server-side operations.
+- **Express.js**: For routing and managing HTTP requests.
+- **MySQL**: For storing and managing data, hosted on AWS RDS.
+- **CORS**: For enabling secure cross-origin requests.
+- **dotenv**: For managing environment variables securely.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **Deployment:**
+- **Amazon RDS**: Hosting the MySQL database with automated backups and scalability.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## **Key Features**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Search Functionality**: Users can search for food items and view real-time results.
+- **Price Comparison**: Compare prices of food items across different restaurants.
+- **Recently Viewed Search Terms**: Users can view their recently searched food items for quick access to previous searches.
+- **Favorites Management**: Users can save their favorite food items for easy reference and comparison later.
+- **Google OAuth Integration**: Secure user authentication and login to ensure data privacy.
+- **Dynamic Data Rendering**: Real-time display of search results using React for a seamless user experience.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## **Getting Started**
 
-### Code Splitting
+### **Prerequisites**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Ensure the following are installed:
 
-### Analyzing the Bundle Size
+- [Node.js](https://nodejs.org/) (v14 or later)
+- [MySQL](https://www.mysql.com/)
+- [Git](https://git-scm.com/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **Installation**
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> 0ee66a1 (Initial commit)
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/dinedeal.git
+   cd dinedeal

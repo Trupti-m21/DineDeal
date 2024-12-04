@@ -20,13 +20,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Create a MySQL connection pool for efficient resource management
 const pool = mysql.createPool({
-    host: process.env.DB_HOST, // e.g., dinedeal-db.cjs0ssiwsf2c.us-east-1.rds.amazonaws.com
-    user: process.env.DB_USER, // e.g., admin
-    password: process.env.DB_PASSWORD, // e.g., Vclass123$
-    database: process.env.DB_NAME, // e.g., dinedeal
-    port: process.env.DB_PORT || 3306, // Default MySQL port
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USER, 
+    password: process.env.DB_PASSWORD, 
+    database: process.env.DB_NAME, 
+    port: process.env.DB_PORT || 3306, t
     waitForConnections: true,
-    connectionLimit: 10, // Adjust based on expected traffic
+    connectionLimit: 10, 
     queueLimit: 0
 });
 
